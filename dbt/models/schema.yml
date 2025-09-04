@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_prices
+    description: Normalização e deduplicação das coletas RAW.
+    columns:
+      - name: symbol
+        tests:
+          - not_null
+          - accepted_values:
+              values: [EUR, USD, BTC, ETH]
+      - name: value
+        tests: [not_null]
+      - name: collected_at
+        tests: [not_null]
+
+  - name: prices_hourly
+    description: Preços agregados por hora.
+    columns:
+      - name: symbol
+        tests: [not_null]
+      - name: collected_hour
+        tests: [not_null]
+
+  - name: kpis_daily
+    description: KPIs diários por símbolo.
+    columns:
+      - name: symbol
+        tests: [not_null]
+      - name: date
+        tests:
+          - not_null
+          - unique
