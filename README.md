@@ -11,15 +11,13 @@
 
 ## Como rodar
 ```bash
-python -m venv .venv && . .venv/bin/activate  # (Windows: .venv\Scripts\activate)
+cd services/scraper
+python -m venv .venv && . .venv/bin/activate
 pip install -r requirements.txt
-pre-commit install
-dbt deps && dbt debug && dbt compile
-```
-
-## Sugestão Chat
-
-Transformações
-- Em vez de “procedures”, recomendo dbt (ou Dataform no BigQuery) para staging → silver → gold. Fica versionado, testável e documentado.
-- Alerta por e-mail quando meta for batida (defina regras por ativo, p.ex. “variação diária > X%”).
-- Airflow para orquestrar tudo. Se quiser GCP-native, use Cloud Composer (Airflow gerenciado).
+export BQ_PROJECT_ID=YOUR_GCP_PROJECT
+export BQ_DATASET_RAW=YOUR_GCP_DATASET
+export BQ_TABLE_RAW=YOUR_GCP_TABLE
+export BQ_LOCATION=US
+python app.py
+``` 
+Além disso, é necessário configurar a autenticação no GCP (`GOOGLE_APLICATION_CREDENTIALS` ou `gcloud auth`).
