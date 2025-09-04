@@ -1,0 +1,23 @@
+# python
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+.pytest_cache/
+.ipynb_checkpoints/
+
+# dbt
+dbt_packages/
+target/
+logs/
+
+# os/ide
+.DS_Store
+.vscode/
+
+# Chaves e credenciais
+*.json
+*.key
+*.pem
+services/scraper/keys/
