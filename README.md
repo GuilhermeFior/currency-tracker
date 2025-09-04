@@ -1,8 +1,8 @@
 # currency-tracker
 
 **Stack**: dbt + BigQuery | Python (pandas) | (Airflow/Dagster)  
-**Objetivo**: acompanhar flutuação do câmbio para moedas selecionadas, em relação ao Real.
-**Dado**: <fonte, granularidade, período>  *TBD*
+**Objetivo**: acompanhar flutuação do câmbio para moedas selecionadas, em relação ao Real.  
+**Dado**: Moedas são buscadas em Frankfurter ECD e Criptomoedas são buscadas em CoinGecko    
 
 ## Arquitetura
 - **Bronze**: ingestão RAW
@@ -15,15 +15,9 @@ python -m venv .venv && . .venv/bin/activate  # (Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 pre-commit install
 dbt deps && dbt debug && dbt compile
+```
 
 ## Sugestão Chat
-
-Scraping (Python + pandas) de EUR, USD, BTC, ETH pela manhã.
-- Faça o scraper idempotente (mesmo input → mesmo output) e com retry + backoff.
-- Adicione hash da linha e timestamp de coleta para deduplicação.
-
-Ingestão → RAW (BigQuery)
-- Tabela particionada por ingestion_ts (DATE/TIMESTAMP) e clusterizada por symbol (e.g., EUR, USD, BTC, ETH).
 
 Transformações
 - Em vez de “procedures”, recomendo dbt (ou Dataform no BigQuery) para staging → silver → gold. Fica versionado, testável e documentado.
