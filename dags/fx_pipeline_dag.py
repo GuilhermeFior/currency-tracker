@@ -38,7 +38,7 @@ with DAG(
             "apache/airflow:latest"
         ),
         env={
-            "BQ_PROJECT_ID": os.getenv("BQ_PROJECT_ID", "sandbox-personal_projects"),
+            "BQ_PROJECT_ID": "{{ var.value.BQ_PROJECT_ID }}",
             "BQ_DATASET_RAW": os.getenv("BQ_DATASET_RAW", "fx_raw"),
             "BQ_TABLE_RAW": os.getenv("BQ_TABLE_RAW", "prices_raw"),
             "BQ_LOCATION": os.getenv("BQ_LOCATION", "US"),
