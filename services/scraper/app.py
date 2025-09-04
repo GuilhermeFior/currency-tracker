@@ -61,7 +61,6 @@ def fetch_currency(base_currency: str = BASE_CURRENCY) -> List[Dict]:
                 "value": value_in_base,
                 "currency": base_currency,
                 "collected_at": collected_at,
-                "ingestion_ts": collected_at,
             }
         )
     return rows
@@ -93,7 +92,6 @@ def fetch_crypto(base_currency: str = BASE_CURRENCY) -> List[Dict]:
                 "value": float(value_in_base),
                 "currency": base_currency,
                 "collected_at": collected_at,
-                "ingestion_ts": collected_at,
             }
         )
     return rows
@@ -106,11 +104,10 @@ def ensure_table(client: bigquery.Client):
         bigquery.SchemaField("value", "NUMERIC", mode="REQUIRED"),
         bigquery.SchemaField("currency", "STRING", mode="REQUIRED"),
         bigquery.SchemaField("collected_at", "TIMESTAMP", mode="REQUIRED"),
-        bigquery.SchemaField("ingestion_ts", "TIMESTAMP", mode="REQUIRED"),
         bigquery.SchemaField("row_hash", "STRING", mode="REQUIRED"),
     ]
     table = bigquery.Table(table_id, schema=schema)
-    table.time_partitioning = bigquery.TimePartitioning(type_=bigquery.TimePartitioningType.DAY, field="ingestion_ts")
+    table.time_partitioning = bigquery.TimePartitioning(type_=bigquery.TimePartitioningType.DAY, field="collected_at")
     table.clustering_fields = ["symbol"]
     try:
         client.get_table(table_id)
@@ -145,7 +142,6 @@ def write_rows(rows: List[Dict]):
     df["currency"] = df["currency"].astype("string")
     df["row_hash"] = df["row_hash"].astype("string")
     df["collected_at"] = pd.to_datetime(df["collected_at"], utc=True)
-    df["ingestion_ts"] = pd.to_datetime(df["ingestion_ts"], utc=True)
     # 'value' deve ficar como object (Decimal), não float:
     # df["value"] = df["value"].astype(object)  # opcional; normalmente já fica object
 
