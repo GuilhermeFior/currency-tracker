@@ -1,0 +1,30 @@
+name: fx_pipeline
+version: 1.0.0
+config-version: 2
+
+profile: default
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+
+models:
+  fx_pipeline:
+    +materialized: view
+    staging:
+      +materialized: incremental
+      +on_schema_change: append_new_columns
+      +incremental_strategy: insert_overwrite
+      +partition_by: {field: collected_at_date, data_type: date}
+      +cluster_by: [symbol]
+    silver:
+      +materialized: incremental
+      +on_schema_change: append_new_columns
+      +incremental_strategy: insert_overwrite
+      +partition_by: {field: date, data_type: date}
+      +cluster_by: [symbol]
+    gold:
+      +materialized: incremental
+      +on_schema_change: append_new_columns
+      +incremental_strategy: insert_overwrite
+      +partition_by: {field: date, data_type: date}
+      +cluster_by: [symbol]
