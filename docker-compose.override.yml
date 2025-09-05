@@ -1,0 +1,20 @@
+services:
+  airflow-webserver:
+    environment:
+      AIRFLOW__CORE__DAGS_FOLDER: /project/dags
+      _PIP_ADDITIONAL_REQUIREMENTS: >
+        dbt-bigquery google-cloud-bigquery pandas pyarrow
+      GOOGLE_APPLICATION_CREDENTIALS: /keys/sandbox-personal-projects-26ad98d02f4f.json
+    volumes:
+      - "C:/Users/guilh/GitHub/currency-tracker:/project"
+      - "C:/Users/guilh/keys:/keys:ro"
+
+  airflow-scheduler:
+    environment:
+      AIRFLOW__CORE__DAGS_FOLDER: /project/dags
+      _PIP_ADDITIONAL_REQUIREMENTS: >
+        dbt-bigquery google-cloud-bigquery pandas pyarrow
+      GOOGLE_APPLICATION_CREDENTIALS: /keys/sandbox-personal-projects-26ad98d02f4f.json
+    volumes:
+      - "C:/Users/guilh/GitHub/currency-tracker:/project"
+      - "C:/Users/guilh/keys:/keys:ro"
