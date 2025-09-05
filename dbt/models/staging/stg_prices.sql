@@ -16,11 +16,11 @@ with src as (
   from `{{ var('project_id', 'sandbox-personal-projects') }}.{{ var('raw_dataset', 'fx_raw') }}.{{ var('raw_table', 'prices_raw') }}`
 ),
 
--- Dedup por row_hash (último ingestion)
+-- Dedup por row_hash (último collect)
 dedup as (
-  select as value * except(rn)
+  select * except(rn)
   from (
-    select s.*, row_number() over(partition by row_hash order by ingestion_ts desc) rn
+    select s.*, row_number() over(partition by row_hash order by collected_at desc) rn
     from src s
   ) where rn = 1
 )
