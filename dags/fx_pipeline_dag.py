@@ -28,15 +28,7 @@ with DAG(
 
     docker_scraper = BashOperator(
         task_id="extract_to_raw",
-        bash_command=(
-            "docker run --rm "
-            "-e BQ_PROJECT_ID=${BQ_PROJECT_ID} "
-            "-e BQ_DATASET_RAW=${BQ_DATASET_RAW} "
-            "-e BQ_TABLE_RAW=${BQ_TABLE_RAW} "
-            "-e BQ_LOCATION=${BQ_LOCATION} "
-            "-e BASE_CURRENCY=${BASE_CURRENCY} "
-            "apache/airflow:latest"
-        ),
+        bash_command="python /opt/airflow/services/scraper/app.py",
         env={
             "BQ_PROJECT_ID": "{{ var.value.BQ_PROJECT_ID }}",
             "BQ_DATASET_RAW": os.getenv("BQ_DATASET_RAW", "fx_raw"),
