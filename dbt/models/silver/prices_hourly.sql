@@ -1,6 +1,6 @@
 {{ config(
     materialized='incremental',
-    partition_by={"field": "collected_date", "data_type": "collected_date"},
+    partition_by={"field": "collected_date", "data_type": "date"},
     cluster_by=["symbol"],
 ) }}
 

@@ -19,7 +19,7 @@ models:
     columns:
       - name: symbol
         tests: [not_null]
-      - name: collected_hour
+      - name: collected_date
         tests: [not_null]
 
   - name: kpis_daily
@@ -27,7 +27,7 @@ models:
     columns:
       - name: symbol
         tests: [not_null]
-      - name: date
+      - name: collected_date
         tests:
           - not_null
           - unique
