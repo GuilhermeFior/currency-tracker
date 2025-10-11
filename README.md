@@ -21,3 +21,27 @@ export BQ_LOCATION=US
 python app.py
 ``` 
 Além disso, é necessário configurar a autenticação no GCP (`GOOGLE_APLICATION_CREDENTIALS` ou `gcloud auth`).
+
+### With Docker and Docker Compose
+- You need to install Docker and Docker Compose
+- [Start with Docker](https://www.docker.com/get-started)
+- [Install Docker Compose](https://docs.docker.com/compose/install/)
+
+### Steps to Docker configuration
+1. Initialize **Docker Compose**
+
+Run the command below on git bash in the folder, in order to upload the services:
+```bash
+docker-compose up
+```
+
+2. Connect to **Airflow** via the URL: [http://localhost:8080](http://localhost:8080).
+
+The username is `airflow`, the same as the password.
+
+3. At the end of the operation, stop **Docker Compose**
+
+Stop the started server with
+```bash
+docker-compose down
+```
