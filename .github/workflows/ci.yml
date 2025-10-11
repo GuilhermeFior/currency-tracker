@@ -49,8 +49,12 @@ jobs:
         run: |
           cd dbt
           dbt deps
-          dbt compile --profiles-dir ~/.dbt
-          dbt build --profiles-dir ~/.dbt --select state:modified+
+          dbt compile --profiles-dir ~/.dbt               # creates target/manifest.json
+          dbt build --profiles-dir ~/.dbt \
+            --select state:modified+ \
+            --state target \
+            --defer
+
 
       - name: Run unit tests
         run: pytest -q
