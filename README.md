@@ -31,7 +31,8 @@ Além disso, é necessário configurar a autenticação no GCP (`GOOGLE_APLICATI
 1. Initialize **Docker Compose**
 
 &ensp; Run the command below on git bash in the folder, in order to upload the services:
-&ensp; ```bash
+
+```bash
 docker-compose up
 ```
 
@@ -42,6 +43,7 @@ docker-compose up
 3. At the end of the operation, stop **Docker Compose**
 
 &ensp; Stop the started server with
-&ensp; ```bash
+
+```bash
 docker-compose down
 ```
