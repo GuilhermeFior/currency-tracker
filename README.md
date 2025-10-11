@@ -27,21 +27,21 @@ Além disso, é necessário configurar a autenticação no GCP (`GOOGLE_APLICATI
 - [Start with Docker](https://www.docker.com/get-started)
 - [Install Docker Compose](https://docs.docker.com/compose/install/)
 
-### Steps to Docker configuration
+### Steps to Docker and Airflow configuration
 1. Initialize **Docker Compose**
 
-Run the command below on git bash in the folder, in order to upload the services:
-```bash
+&ensp; Run the command below on git bash in the folder, in order to upload the services:
+&ensp; ```bash
 docker-compose up
 ```
 
 2. Connect to **Airflow** via the URL: [http://localhost:8080](http://localhost:8080).
 
-The username is `airflow`, the same as the password.
+&ensp; The username is `airflow`, the same as the password.
 
 3. At the end of the operation, stop **Docker Compose**
 
-Stop the started server with
-```bash
+&ensp; Stop the started server with
+&ensp; ```bash
 docker-compose down
 ```
