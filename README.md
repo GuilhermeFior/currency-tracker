@@ -1,15 +1,20 @@
 # currency-tracker
 
+I started this project to study the integration of dbt and BigQuery (GCP) as well as data orchestration with Apache Airflow.
+
+It aims to load on BigQuery the daily quotations of USD, EUR, BTC and ETH, as compared to BRL, so that we can track when they reached the lowest, for example.
+
 **Stack**: dbt + BigQuery | Python (pandas) | (Airflow/Dagster)  
-**Objetivo**: acompanhar flutuação do câmbio para moedas selecionadas, em relação ao Real.  
-**Dado**: Moedas são buscadas em Frankfurter ECD e Criptomoedas são buscadas em CoinGecko    
+**Data source**: USD and EUR are retrieved from Frankfurter ECD e BTC and ETH from CoinGecko    
 
-## Arquitetura
-- **Bronze**: ingestão RAW
-- **Silver**: limpeza/conformidade
-- **Gold**: métricas/marts para BI
+## Data Architecture
+For this project I used the Medallion Architecture.
+- **Raw**: bucketing/data ingestion
+- **Bronze**: raw data mirroring
+- **Silver**: treated data
+- **Gold**: metrics for BI and analytics
 
-## Como rodar
+## How to run
 ```bash
 cd services/scraper
 python -m venv .venv && . .venv/bin/activate
@@ -20,7 +25,7 @@ export BQ_TABLE_RAW=YOUR_GCP_TABLE
 export BQ_LOCATION=US
 python app.py
 ``` 
-Além disso, é necessário configurar a autenticação no GCP (`GOOGLE_APLICATION_CREDENTIALS` ou `gcloud auth`).
+It is also necessary to have Google auth configured (`GOOGLE_APLICATION_CREDENTIALS` or `gcloud auth`).
 
 ### With Docker and Docker Compose
 - You need to install Docker and Docker Compose
