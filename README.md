@@ -20,7 +20,25 @@ For this project I used the Medallion Architecture.
 ## How to run
 
 ### GCP Service Account
+This project uses Google BigQuery to store currency and crypto exchange rate data.
+To run it locally or in Docker, you need to set up a Google Cloud service account with the correct permissions and provide its credentials to the project.
 
+Follow the steps bellow carefully:
+1. Create a Google Cloud Service Account
+Under "Grant this service account acess to the project", add the following roles:
+- `Bigquery Data Editor`
+- `BigQuery User`
+2. Generate and download a key file (choose JSON format)
+A `.json` file will automatically download - this is your private key.
+3. Save the key file locally
+Move the downloaded file to a safe folder on your computer, for example:
+- Windows: `C:\Users\<your_user>\keys\<key.json>`
+- macOS/Linux: `~/keys/<key.json>`
+4. Inside your project's `.env` file (which you create from `.env.example`), update:
+```bash
+HOST_KEYS_DIR=C:/Users/<your_user>/keys
+GCP_KEY_FILENAME=<key.json>
+```
 
 ###
 ```bash
