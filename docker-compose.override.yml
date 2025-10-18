@@ -2,36 +2,36 @@ services:
   airflow-webserver:
     environment:
       AIRFLOW__CORE__DAGS_FOLDER: /project/dags
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/sandbox-personal-projects-26ad98d02f4f.json
+      GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
     volumes:
-      - "C:/Users/guilh/GitHub/currency-tracker:/project"
-      - "C:/Users/guilh/keys:/keys:ro"
-      - "C:/Users/guilh/.dbt:/home/airflow/.dbt:ro"
+      - ./../project
+      - ${HOST_KEYS_DIR}:/keys:ro
+      - ${HOST_DBT_DIR:-~/.dbt}:/home/airflow/.dbt:ro
 
   airflow-scheduler:
     environment:
       AIRFLOW__CORE__DAGS_FOLDER: /project/dags
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/sandbox-personal-projects-26ad98d02f4f.json
+      GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
     volumes:
-      - "C:/Users/guilh/GitHub/currency-tracker:/project"
-      - "C:/Users/guilh/keys:/keys:ro"
-      - "C:/Users/guilh/.dbt:/home/airflow/.dbt:ro"
+      - ./../project
+      - ${HOST_KEYS_DIR}:/keys:ro
+      - ${HOST_DBT_DIR:-~/.dbt}:/home/airflow/.dbt:ro
 
   airflow-worker:
     environment:
       AIRFLOW__CORE__DAGS_FOLDER: /project/dags
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/sandbox-personal-projects-26ad98d02f4f.json
+      GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
     volumes:
-      - "C:/Users/guilh/GitHub/currency-tracker:/project"
-      - "C:/Users/guilh/keys:/keys:ro"
-      - "C:/Users/guilh/.dbt:/home/airflow/.dbt:ro"
+      - ./../project
+      - ${HOST_KEYS_DIR}:/keys:ro
+      - ${HOST_DBT_DIR:-~/.dbt}:/home/airflow/.dbt:ro
 
   airflow-init:
     environment:
       AIRFLOW__CORE__DAGS_FOLDER: /project/dags
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/sandbox-personal-projects-26ad98d02f4f.json
+      GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
       AIRFLOW_UID: ${AIRFLOW_UID}
     volumes:
-      - "C:/Users/guilh/GitHub/currency-tracker:/project"
-      - "C:/Users/guilh/keys:/keys:ro"
-      - "C:/Users/guilh/.dbt:/home/airflow/.dbt:ro"
+      - ./../project
+      - ${HOST_KEYS_DIR}:/keys:ro
+      - ${HOST_DBT_DIR:-~/.dbt}:/home/airflow/.dbt:ro
