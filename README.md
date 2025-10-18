@@ -1,11 +1,14 @@
 # currency-tracker
 
-I started this project to study the integration of dbt and BigQuery (GCP) as well as data orchestration with Apache Airflow.
+This project aims to store daily quotations of USD, EUR, BTC and ETH, as compared to BRL, so that we can track when they reached the lowest, for example.
 
-It aims to load on BigQuery the daily quotations of USD, EUR, BTC and ETH, as compared to BRL, so that we can track when they reached the lowest, for example.
+**Data source**: USD and EUR are retrieved from Frankfurter ECD e BTC and ETH from CoinGecko  
+**Stack**: dbt + BigQuery | Airflow | Docker
 
-**Stack**: dbt + BigQuery | Python (pandas) | (Airflow/Dagster)  
-**Data source**: USD and EUR are retrieved from Frankfurter ECD e BTC and ETH from CoinGecko    
+- BigQuery is for data storage and analytics
+- dbt will be used for data transformation (*bronze* -> *silver* -> *gold*). It also acts on data quality.
+- Airflow is for the orchestration (DAGs)
+- Docker is being used for containerization
 
 ## Data Architecture
 For this project I used the Medallion Architecture.
@@ -15,6 +18,11 @@ For this project I used the Medallion Architecture.
 - **Gold**: metrics for BI and analytics
 
 ## How to run
+
+### GCP Service Account
+
+
+###
 ```bash
 cd services/scraper
 python -m venv .venv && . .venv/bin/activate

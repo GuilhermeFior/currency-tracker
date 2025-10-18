@@ -15,30 +15,30 @@ PROJECT_ID = os.getenv("BQ_PROJECT_ID", "sandbox-personal-projects")
 DATASET_RAW = os.getenv("BQ_DATASET_RAW", "fx_raw")
 TABLE_RAW = os.getenv("BQ_TABLE_RAW", "prices_raw")
 LOCATION = os.getenv("BQ_LOCATION", "US")
-# Base currency para padronização (ex.: BRL ou USD)
+# Defines BRL as the base currency
 BASE_CURRENCY = os.getenv("BASE_CURRENCY", "BRL")
 
-
-# Fontes públicas sugeridas (frankfurter e crypto)
+# Public data sources for USD, EUR, BTC and ETH
 FRANKFURTER_ECB_URL = os.getenv("FRANKFURTER_ECB_URL", "https://api.frankfurter.dev/v1/latest")
 COINGECKO_SIMPLE_URL = os.getenv("COINGECKO_SIMPLE_URL", "https://api.coingecko.com/api/v3/simple/price")
-
 
 SYMBOLS_FRANKFURTER = ["EUR", "USD"]
 SYMBOLS_CRYPTO = ["BTC", "ETH"]
 
-SCALE = Decimal("0.000000001")  # 9 casas decimais (NUMERIC do BQ)
+SCALE = Decimal("0.000000001")  # 9 decimal places
 
 # ===== Functions =====
 def _row_hash(*values: str) -> str:
+    """Generates hash to identify each row
+    """
     h = hashlib.sha256()
     for v in values:
         h.update(str(v).encode("utf-8"))
     return h.hexdigest()
 
 def fetch_currency(base_currency: str = BASE_CURRENCY) -> List[Dict]:
-    """Coleta taxas de câmbio FRANKFURTER e retorna lista de dicts padronizados.
-    Usa frankfurter.dev (gratuito). Ex.: EUR->BRL, USD->BRL.
+    """Colects exchange rates from FRANKFURTER and returns a list of dicts.
+    Uses frankfurter.dev (free).
     """
     rows = []
     collected_at = datetime.now(timezone.utc)
@@ -66,7 +66,8 @@ def fetch_currency(base_currency: str = BASE_CURRENCY) -> List[Dict]:
     return rows
 
 def fetch_crypto(base_currency: str = BASE_CURRENCY) -> List[Dict]:
-    """Coleta preços simples de cripto via CoinGecko em BASE_CURRENCY."""
+    """Colects crypto quotations via CoinGecko (compared to BRL) and returns
+    a list of dicts"""
     ids_map = {"BTC": "bitcoin", "ETH": "ethereum"}
     ids = ",".join(ids_map[s] for s in SYMBOLS_CRYPTO)
     resp = requests.get(
@@ -97,14 +98,17 @@ def fetch_crypto(base_currency: str = BASE_CURRENCY) -> List[Dict]:
     return rows
 
 def ensure_table(client: bigquery.Client):
+    """ Defines the BigQuery table's schema and configures the
+    table's storage (partitioning by collected_at and clustering by symbol)
+    """
     table_id = f"{PROJECT_ID}.{DATASET_RAW}.{TABLE_RAW}"
     schema = [
-        bigquery.SchemaField("symbol", "STRING", mode="REQUIRED"),
-        bigquery.SchemaField("source", "STRING", mode="REQUIRED"),
-        bigquery.SchemaField("value", "NUMERIC", mode="REQUIRED"),
-        bigquery.SchemaField("currency", "STRING", mode="REQUIRED"),
-        bigquery.SchemaField("collected_at", "TIMESTAMP", mode="REQUIRED"),
-        bigquery.SchemaField("row_hash", "STRING", mode="REQUIRED"),
+        bigquery.SchemaField("symbol",          "STRING",       mode="REQUIRED"),
+        bigquery.SchemaField("source",          "STRING",       mode="REQUIRED"),
+        bigquery.SchemaField("value",           "NUMERIC",      mode="REQUIRED"),
+        bigquery.SchemaField("currency",        "STRING",       mode="REQUIRED"),
+        bigquery.SchemaField("collected_at",    "TIMESTAMP",    mode="REQUIRED"),
+        bigquery.SchemaField("row_hash",        "STRING",       mode="REQUIRED"),
     ]
     table = bigquery.Table(table_id, schema=schema)
     table.time_partitioning = bigquery.TimePartitioning(type_=bigquery.TimePartitioningType.DAY, field="collected_at")
@@ -115,14 +119,18 @@ def ensure_table(client: bigquery.Client):
         client.create_dataset(DATASET_RAW, exists_ok=True)
         client.create_table(table)
 
-def to_decimal_9(x):
-    # lida com float/str/None
+def to_decimal(x):
+    """ Takes a float/str/None var and turns into a Decimal var
+    with SCALE decimal places, as defined inside the program
+    """
     if x is None:
         return None
     d = Decimal(str(x))
     return d.quantize(SCALE, rounding=ROUND_HALF_UP)
 
 def write_rows(rows: List[Dict]):
+    """Writes rows into the BigQuery table
+    """
     if not rows:
         print("No rows to insert.")
         return
@@ -131,19 +139,17 @@ def write_rows(rows: List[Dict]):
         r["row_hash"] = _row_hash(
             r["symbol"], r["source"], r["currency"], r["value"], r["collected_at"]
         )
-        # >>> ajuste crítico para NUMERIC:
-        r["value"] = to_decimal_9(r["value"])
+        # >>> critical adjustment for NUMERIC:
+        r["value"] = to_decimal(r["value"])
 
     df = pd.DataFrame(rows)
 
-    # garanta os dtypes amigáveis ao Arrow
+    # makes sure dtypes are friendly to Arrow
     df["symbol"] = df["symbol"].astype("string")
     df["source"] = df["source"].astype("string")
     df["currency"] = df["currency"].astype("string")
     df["row_hash"] = df["row_hash"].astype("string")
     df["collected_at"] = pd.to_datetime(df["collected_at"], utc=True)
-    # 'value' deve ficar como object (Decimal), não float:
-    # df["value"] = df["value"].astype(object)  # opcional; normalmente já fica object
 
     client = bigquery.Client(project=PROJECT_ID, location=LOCATION)
     ensure_table(client)

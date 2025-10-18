@@ -3,7 +3,6 @@ __pycache__/
 *.py[cod]
 .venv/
 .env
-.env.*
 .pytest_cache/
 .ipynb_checkpoints/
 
