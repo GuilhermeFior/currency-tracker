@@ -47,7 +47,7 @@ HOST_KEYS_DIR=C:/Users/<your_user>/keys
 GCP_KEY_FILENAME=<key.json>
 ```
 
-###
+### Run locally
 ```bash
 cd services/scraper
 python -m venv .venv && . .venv/bin/activate
@@ -58,7 +58,6 @@ export BQ_TABLE_RAW=YOUR_GCP_TABLE
 export BQ_LOCATION=US
 python app.py
 ``` 
-It is also necessary to have Google auth configured (`GOOGLE_APLICATION_CREDENTIALS` or `gcloud auth`).
 
 ### With Docker and Docker Compose
 - You need to install Docker and Docker Compose
