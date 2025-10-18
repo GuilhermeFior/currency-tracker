@@ -1,33 +1,33 @@
 services:
   airflow-webserver:
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
+      GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
     volumes:
-      - ./../project
+      - ./:/project
       - ${HOST_KEYS_DIR}:/keys:ro
       - ${HOST_DBT_DIR:-~/.dbt}:/home/airflow/.dbt:ro
 
   airflow-scheduler:
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
+      GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
     volumes:
-      - ./../project
+      - ./:/project
       - ${HOST_KEYS_DIR}:/keys:ro
       - ${HOST_DBT_DIR:-~/.dbt}:/home/airflow/.dbt:ro
 
   airflow-worker:
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
+      GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
     volumes:
-      - ./../project
+      - ./:/project
       - ${HOST_KEYS_DIR}:/keys:ro
       - ${HOST_DBT_DIR:-~/.dbt}:/home/airflow/.dbt:ro
 
   airflow-init:
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
+      GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
       AIRFLOW_UID: ${AIRFLOW_UID}
     volumes:
-      - ./../project
+      - ./:/project
       - ${HOST_KEYS_DIR}:/keys:ro
       - ${HOST_DBT_DIR:-~/.dbt}:/home/airflow/.dbt:ro
