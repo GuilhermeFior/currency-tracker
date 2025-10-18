@@ -1,7 +1,6 @@
 services:
   airflow-webserver:
     environment:
-      AIRFLOW__CORE__DAGS_FOLDER: /project/dags
       GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
     volumes:
       - ./../project
@@ -10,7 +9,6 @@ services:
 
   airflow-scheduler:
     environment:
-      AIRFLOW__CORE__DAGS_FOLDER: /project/dags
       GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
     volumes:
       - ./../project
@@ -19,7 +17,6 @@ services:
 
   airflow-worker:
     environment:
-      AIRFLOW__CORE__DAGS_FOLDER: /project/dags
       GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
     volumes:
       - ./../project
@@ -28,7 +25,6 @@ services:
 
   airflow-init:
     environment:
-      AIRFLOW__CORE__DAGS_FOLDER: /project/dags
       GOOGLE_APPLICATION_CREDENTIALS: /keys/{GCP_KEY_FILENAME}
       AIRFLOW_UID: ${AIRFLOW_UID}
     volumes:
