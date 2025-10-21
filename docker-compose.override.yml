@@ -1,7 +1,11 @@
 services:
   airflow-webserver:
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
+      - GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
+      - BQ_PROJECT_ID: ${BQ_PROJECT_ID}
+      - BQ_DATASET_RAW: ${BQ_DATASET_RAW}
+      - BQ_TABLE_RAW: ${BQ_TABLE_RAW}
+      - BQ_LOCATION: ${BQ_LOCATION}
     volumes:
       - ./:/project
       - ${HOST_KEYS_DIR}:/keys:ro
@@ -9,7 +13,11 @@ services:
 
   airflow-scheduler:
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
+      - GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
+      - BQ_PROJECT_ID: ${BQ_PROJECT_ID}
+      - BQ_DATASET_RAW: ${BQ_DATASET_RAW}
+      - BQ_TABLE_RAW: ${BQ_TABLE_RAW}
+      - BQ_LOCATION: ${BQ_LOCATION}
     volumes:
       - ./:/project
       - ${HOST_KEYS_DIR}:/keys:ro
@@ -17,7 +25,11 @@ services:
 
   airflow-worker:
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
+      - GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
+      - BQ_PROJECT_ID: ${BQ_PROJECT_ID}
+      - BQ_DATASET_RAW: ${BQ_DATASET_RAW}
+      - BQ_TABLE_RAW: ${BQ_TABLE_RAW}
+      - BQ_LOCATION: ${BQ_LOCATION}
     volumes:
       - ./:/project
       - ${HOST_KEYS_DIR}:/keys:ro
@@ -25,8 +37,12 @@ services:
 
   airflow-init:
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
-      AIRFLOW_UID: ${AIRFLOW_UID}
+      - GOOGLE_APPLICATION_CREDENTIALS: /keys/${GCP_KEY_FILENAME}
+      - BQ_PROJECT_ID: ${BQ_PROJECT_ID}
+      - BQ_DATASET_RAW: ${BQ_DATASET_RAW}
+      - BQ_TABLE_RAW: ${BQ_TABLE_RAW}
+      - BQ_LOCATION: ${BQ_LOCATION}
+      - AIRFLOW_UID: ${AIRFLOW_UID}
     volumes:
       - ./:/project
       - ${HOST_KEYS_DIR}:/keys:ro
