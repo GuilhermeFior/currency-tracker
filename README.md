@@ -67,7 +67,7 @@ C:/Users/<your_user>/
     └── profiles.yml
 ```
 
-Inside Docker (mapped automatically by docker-compose.yml):
+Inside Docker (mapped automatically by `docker-compose.yml`):
 ```swift
 /home/airflow/.dbt/profiles.yml
 ```
@@ -86,9 +86,12 @@ export BQ_PROJECT_ID=YOUR_GCP_PROJECT
 export BQ_DATASET_RAW=YOUR_GCP_DATASET
 export BQ_TABLE_RAW=YOUR_GCP_TABLE
 export BQ_LOCATION=US
+
 python app.py
-``` 
-You must have Google authentication configured either via `GOOGLE_APLICATION_CREDENTIALS` or `gcloud auth application-default login`.
+```
+
+> [! WARNING]
+> You must have Google authentication configured either via `GOOGLE_APLICATION_CREDENTIALS` or `gcloud auth application-default login`.
 
 ### 4. Run with Docker and Docker Compose
 
@@ -115,4 +118,4 @@ docker-compose down
 
 ---
 
-Enjoy exploring your currency-tracker pipeline!
+Enjoy exploring your currency-tracker pipeline! Feel free to make suggestions or ask any questions!
