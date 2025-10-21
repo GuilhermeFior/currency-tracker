@@ -57,6 +57,16 @@ Move the downloaded file to a safe folder on your computer, for example:
 
 - Inside your project's root folder, create a `.env` (from `.env.example` in this repo) and update:
 
+```bash
+HOST_KEYS_DIR=/ABSOLUTE/PATH/TO/your/local/keys
+HOST_DBT_DIR=/ABSOLUTE/PATH/TO/your/local/.dbt
+BQ_PROJECT_ID=YOUR_PROJECT_ID
+BQ_DATASET_RAW=YOUR_DATASET_RAW
+BQ_TABLE_RAW=YOUR_TABLE_RAW
+BQ_LOCATION=YOUR_BQ_LOCATION
+GCP_KEY_FILENAME=KEY_FILE_NAME.json
+```
+
 ### 2. Configure `profiles.yml` for dbt
 
 dbt requires a configuration file named `profiles.yml` that stores connection details to BigQuery. This file should not be inside your project folder, but rather in your user's home directory, inside a `.dbt` folder.
