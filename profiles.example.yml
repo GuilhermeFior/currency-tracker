@@ -6,6 +6,6 @@ default:
       project: "{{ env_var('BQ_PROJECT_ID') }}"
       dataset: "{{ env_var('BQ_DATASET_RAW') }}"
       location: "{{ env_var('BQ_LOCATION') }}"
-      keyfile: "{{ env_var('GCP_KEY_FILENAME') }}"
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}"
       threads: 4
   target: dev
