@@ -90,7 +90,7 @@ export BQ_LOCATION=US
 python app.py
 ```
 
-> [! WARNING]
+> [!WARNING]
 > You must have Google authentication configured either via `GOOGLE_APLICATION_CREDENTIALS` or `gcloud auth application-default login`.
 
 ### 4. Run with Docker and Docker Compose
