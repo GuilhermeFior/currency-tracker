@@ -3,9 +3,9 @@ default:
     dev:
       type: bigquery
       method: service-account
-      project: YOUR_GCP_PROJECT
-      dataset: fx_dev
-      keyfile: {{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}
-      location: US
+      project: "{{ env_var('BQ_PROJECT_ID') }}"
+      dataset: "{{ env_var('BQ_DATASET_RAW') }}"
+      location: "{{ env_var('BQ_LOCATION') }}"
+      keyfile: "{{ env_var('GCP_KEY_FILENAME') }}"
       threads: 4
   target: dev
