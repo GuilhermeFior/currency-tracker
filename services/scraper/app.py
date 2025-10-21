@@ -11,10 +11,10 @@ import requests
 from decimal import Decimal, ROUND_HALF_UP
 
 # ===== Config via env vars =====
-PROJECT_ID = os.getenv("BQ_PROJECT_ID", "sandbox-personal-projects")
-DATASET_RAW = os.getenv("BQ_DATASET_RAW", "fx_raw")
-TABLE_RAW = os.getenv("BQ_TABLE_RAW", "prices_raw")
-LOCATION = os.getenv("BQ_LOCATION", "US")
+PROJECT_ID = os.getenv("BQ_PROJECT_ID")
+DATASET_RAW = os.getenv("BQ_DATASET_RAW")
+TABLE_RAW = os.getenv("BQ_TABLE_RAW")
+LOCATION = os.getenv("BQ_LOCATION")
 # Defines BRL as the base currency
 BASE_CURRENCY = os.getenv("BASE_CURRENCY", "BRL")
 
