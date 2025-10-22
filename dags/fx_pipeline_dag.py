@@ -13,7 +13,7 @@ DEFAULT_ARGS = {
 
 with DAG(
     dag_id="fx_pipeline",
-    description="Scrape FX & Crypto → RAW → dbt staging/silver/gold → KPIs",
+    description="Scrape FX & Crypto → RAW → dbt staging/silver/gold",
     start_date=datetime(2025, 1, 1),
     schedule_interval='0 7 * * *',
     catchup=False,
@@ -27,10 +27,12 @@ with DAG(
         bash_command="python /project/services/scraper/app.py"
     )
 
-    # Rodando dbt via Bash (o ambiente do worker precisa ter dbt instalado/configurado)
+    # Running dbt via Bash
     dbt_deps = BashOperator(
         task_id="dbt_deps",
-        bash_command="cd /project/dags/../dbt && dbt deps --profiles-dir ~/.dbt"
+        bash_command=(
+            "cd /project/dags/../dbt && dbt deps --profiles-dir ~/.dbt"
+        )
     )
 
     dbt_staging = BashOperator(
