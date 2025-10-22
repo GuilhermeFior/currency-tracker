@@ -15,7 +15,7 @@ with DAG(
     dag_id="fx_pipeline",
     description="Scrape FX & Crypto → RAW → dbt staging/silver/gold → KPIs",
     start_date=datetime(2025, 1, 1),
-    schedule_interval=None,
+    schedule_interval='0 7 * * *',
     catchup=False,
     default_args=DEFAULT_ARGS,
     max_active_runs=1,
