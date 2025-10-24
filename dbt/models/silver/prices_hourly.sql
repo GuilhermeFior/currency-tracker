@@ -7,7 +7,7 @@
 with base as (
   select * from `sandbox-personal-projects.fx_dev.stg_prices`
 ),
--- Padroniza para granularidade horária (floor para hora)
+
 hourly as (
   select
     symbol,
