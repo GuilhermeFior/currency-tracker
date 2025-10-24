@@ -128,4 +128,14 @@ docker-compose down
 
 ---
 
+## 🧭 Next steps
+
+Here are some ideas and improvements planned for the next iterations of the project:
+
+- Introduce dbt tests for data quality validation
+- Connect the gold layer to a BI tool for monitoring currency trends
+- Deploy the pipeline on GCP using Cloud Composer
+
+---
+
 Enjoy exploring your currency-tracker pipeline! Feel free to make suggestions or ask any questions!
