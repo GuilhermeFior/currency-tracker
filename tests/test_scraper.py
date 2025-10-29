@@ -6,9 +6,11 @@ def test_fetch_currency_returns_rows():
     rows = fetch_currency()
     assert isinstance(rows, list)
     assert any(r["symbol"] == "EUR" for r in rows)
+    assert any(r["symbol"] == "USD" for r in rows)
 
 
 def test_fetch_crypto_returns_rows():
     rows = fetch_crypto()
     assert isinstance(rows, list)
     assert any(r["symbol"] == "BTC" for r in rows)
+    assert any(r["symbol"] == "ETH" for r in rows)
