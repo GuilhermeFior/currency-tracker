@@ -2,7 +2,7 @@
 
 This project aims to store daily quotations of USD, EUR, BTC and ETH compared to BRL, so we can track events as such as when they reached the lowest value.
 
-![Pipeline diagram](/excalidraw_diagram.png)
+![Pipeline diagram](images/excalidraw_diagram.png)
 
 **Data source**:
 - USD and EUR are retrieved from Frankfurter ECD
