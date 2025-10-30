@@ -20,4 +20,3 @@ logs/
 *.key
 *.pem
 services/scraper/keys/
-*.png
