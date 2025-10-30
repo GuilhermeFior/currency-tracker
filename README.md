@@ -2,6 +2,8 @@
 
 This project aims to store daily quotations of USD, EUR, BTC and ETH compared to BRL, so we can track events as such as when they reached the lowest value.
 
+![Pipeline diagram](excalidraw_diagram-1.png)
+
 **Data source**:
 - USD and EUR are retrieved from Frankfurter ECD
 - BTC and ETH from CoinGecko
@@ -82,7 +84,7 @@ Inside Docker (mapped automatically by `docker-compose.yml`):
 /home/airflow/.dbt/profiles.yml
 ```
 
-I left a `profiles.example.yml` as an example on how it should be configured. This version dinamically reads the environment variables provided by Docker on your terminal (`.env` file), so you never hard-code credentials or paths.
+I left `profiles.example.yml` as an example on how it should be configured. This version dinamically reads the environment variables provided by Docker on your terminal (`.env` file), so you never hard-code credentials or paths.
 
 ### 3. Run the Scraper locally (optional) 
 
@@ -118,7 +120,7 @@ docker-compose up
 
 **2. Connect to Airflow via the URL: [http://localhost:8080](http://localhost:8080).**
 
-The username is `airflow`, the same as the password.
+The username and password are `airflow`.
 
 **3. At the end of the operation, stop Docker Compose**
 
@@ -128,14 +130,13 @@ docker-compose down
 
 ---
 
-## 🧭 Next steps
+## Next steps
 
 Here are some ideas and improvements planned for the next iterations of the project:
 
-- Introduce dbt tests for data quality validation
 - Connect the gold layer to a BI tool for monitoring currency trends
 - Deploy the pipeline on GCP using Cloud Composer
 
 ---
 
-Enjoy exploring your currency-tracker pipeline! Feel free to make suggestions or ask any questions!
+Enjoy exploring your currency-tracker pipeline, and feel free to make suggestions or ask any questions!
