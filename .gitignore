@@ -15,8 +15,9 @@ logs/
 .DS_Store
 .vscode/
 
-# Chaves e credenciais
+# keys and credentials
 *.json
 *.key
 *.pem
 services/scraper/keys/
+*.png
